@@ -29,7 +29,9 @@ package Zlatan_Helper;
 
 requires
   rtl,
-  vcl;
+  vcl,
+  dbrtl,
+  dsnap;
 
 contains
   Zlatan in 'Zlatan.pas';

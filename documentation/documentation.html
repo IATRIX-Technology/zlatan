@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Documentação - Zlatan Helper</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Highlight.css -->
+    <link rel="stylesheet" href="third/highlight/styles/dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Zlatan Helper Component</h1>
+            <p>Documentação</p>
+        </div>
+
+        <div>
+            <input id="input-search" type="search" spellcheck="false" placeholder="Pesquisar...">
+        </div>
+    </header>
+
+    <main>
+        <p id="zero-results" class="hide"></p>
+        <section class="list">
+            <div class="list-item">
+                <h2>RandomInt <span>function RandomInt(nStart, nEnd: Integer): Integer;</span></h2>
+                <p>Função para retornar um número inteiro aleatório dentro de um intervalo inclusivo especificado.</p>
+                <pre><code class="language-delphi">Zlatan1.RandomInt(0, 10); // Return: 4
+Zlatan1.RandomInt(0, 10); // Return: 10
+Zlatan1.RandomInt(0, 10); // Return: 6
+Zlatan1.RandomInt(0, 10); // Return: 0</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>RandomDouble <span>function RandomDouble(nStart, nEnd: Double): Double;</span></h2>
+                <p>Função para retornar um número de ponto flutuante aleatório dentro de um intervalo inclusivo especificado.</p>
+                <pre><code class="language-delphi">Zlatan1.RandomDouble(0.0, 10.0); // Return: 6.41595561988652
+Zlatan1.RandomDouble(0.0, 10.0); // Return: 10.0
+Zlatan1.RandomDouble(0.0, 10.0); // Return: 2.85189245129004
+Zlatan1.RandomDouble(0.0, 10.0); // Return: 0.0</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>RandomChoiceArray <span>function RandomChoiceArray&lt;T&gt;(const arr: array of T): T;</span></h2>
+                <p>Função para retornar um valor aleatório de um vetor especificado.
+                </p>
+                <pre><code class="language-delphi">var
+    _intArray: array of Integer;
+    _doubleArray: array of Double;
+begin
+    // Definindo um vetor de Integer (3)
+    SetLength(_intArray, 3);
+    _intArray[0] := 1;
+    _intArray[1] := 2;
+    _intArray[2] := 3;
+
+    // Definindo um vetor de Double (3)
+    SetLength(_doubleArray, 3);
+    _doubleArray[0] := 1.1;
+    _doubleArray[1] := 2.2;
+    _doubleArray[2] := 3.3;
+
+    Zlatan1.RandomChoiceArray<Integer>(_intArray);   // Return: 3
+    Zlatan1.RandomChoiceArray<Double>(_doubleArray); // Return: 2.2
+end;</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>RandomChoiceClientDataSet <span>procedure RandomChoiceClientDataSet(cds: TClientDataSet);</span></h2>
+                <p>Procedure para apontar aleatoriamente um registro do TClientDataSet especificado.</p>
+                <pre><code class="language-delphi">// Move o cursor do TClientDataSet para um registro aleatório
+Zlatan1.RandomChoiceClientDataSet(_ExemploDeClientDataSet);</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <small>Powered by &copy; IAtrix Technology 2024</small>
+    </footer>
+    
+    
+    <!-- Highlight.js -->
+    <script src="third/highlight/highlight.min.js"></script>
+    <script src="third/highlight/languages/delphi.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

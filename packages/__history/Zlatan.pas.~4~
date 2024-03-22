@@ -1,0 +1,38 @@
+unit Zlatan;
+
+interface
+
+uses
+    System.SysUtils, System.Classes, vcl.Dialogs;
+
+type
+    TZlatan = class(TComponent)
+    private
+        { Private declarations }
+    protected
+        { Protected declarations }
+    public
+        { Public declarations }
+        function RandomInt(nStart, nEnd: Integer): Integer;
+    published
+        { Published declarations }
+    end;
+
+procedure Register;
+
+implementation
+
+procedure Register;
+begin
+    RegisterComponents('Zlatan Helper', [TZlatan]);
+end;
+
+{ TZlatan }
+
+function TZlatan.RandomInt(nStart, nEnd: Integer): Integer;
+begin
+    Randomize;
+    Result := Random((nEnd - nStart) + 1) + nStart;
+end;
+
+end.
