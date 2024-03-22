@@ -30,7 +30,4 @@ package Zlatan_Helper;
 requires
   rtl;
 
-contains
-  Zlatan in 'Zlatan.pas';
-
 end.
