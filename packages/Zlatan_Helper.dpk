@@ -28,7 +28,8 @@ package Zlatan_Helper;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl;
+  rtl,
+  vcl;
 
 contains
   Zlatan in 'Zlatan.pas';
