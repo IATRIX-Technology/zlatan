@@ -1,0 +1,49 @@
+# Arquivos compilados
+*.exe
+*.dll
+*.bpl
+*.dcu
+*.dcp
+*.res
+
+# Arquivos temporários
+*.~*
+*.bak
+*.tmp
+
+# Arquivos de projeto
+*.dsk
+*.dproj
+*.groupproj
+*.bdsgroup
+__history/
+ModelSupportFiles/
+ProjectBackup/
+__recovery/
+
+# Arquivos de configuração da IDE
+*.local
+*.identcache
+*.stat
+
+# Arquivos de depuração
+*.map
+*.tds
+*.drc
+*.~*
+
+# Arquivos de configuração
+*.cfg
+*.ini
+
+# Arquivos de log
+*.log
+
+# Arquivos gerados pelo compilador
+*.identcache
+
+# Arquivos de backup
+*~
+
+# Cache
+__recovery/
