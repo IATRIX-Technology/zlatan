@@ -21,4 +21,4 @@ A documentação completa está disponível em ['documentation/documentation.htm
     
 15. **Apontando o diretório do componente**: No RAD Studio, vá em "Tools > Options > Language > Delphi > Library > Library path(...)", clique no ícone de pasta(Browse for folder...), navegue até a pasta onde os arquivos do componente foram baixados e selecione a pasta '/src'. Por fim, clique em "Add > OK > Save".
 
-Pronto! Seu componente está pronto para uso 😀
+Pronto! Seu componente está pronto para uso. 😀
