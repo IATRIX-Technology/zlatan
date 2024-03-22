@@ -13,6 +13,7 @@ type
         { Protected declarations }
     public
         { Public declarations }
+
         function RandomInt(nStart, nEnd: Integer): Integer;
         function RandomDouble(nStart, nEnd: Double): Double;
         function RandomChoiceArray<T>(const arr: array of T): T;
