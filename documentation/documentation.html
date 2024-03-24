@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Highlight.css -->
-    <link rel="stylesheet" href="third/highlight/styles/dark.min.css">
+    <link rel="stylesheet" href="third/highlight/styles/vs2015.min.css">
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -81,6 +81,138 @@ end;</code></pre>
                 <p>Procedure para apontar aleatoriamente um registro do TClientDataSet especificado.</p>
                 <pre><code class="language-delphi">// Move o cursor do TClientDataSet para um registro aleatório
 Zlatan1.RandomChoiceClientDataSet(_ExemploDeClientDataSet);</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>ShuffleArray <span>procedure ShuffleArray&lt;T&gt;(var arr: TArray&lt;T&gt;);</span></h2>
+                <p>Procedure para embaralhar valores de um vetor especificado.</p>
+                <pre><code class="language-delphi">// Embaralha valores de um vetor
+Zlatan1.ShuffleArray<Integer>(_vetorDeInteger);
+Zlatan1.ShuffleArray<string>(_vetorDeString);</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>ShuffleClientDataSet <span>procedure ShuffleClientDataSet(cds: TClientDataSet);</span></h2>
+                <p>Procedure para embaralhar valores de um TClientDataSet especificado.</p>
+                <pre><code class="language-delphi">// Embaralha os registros de um ClientDataSet
+Zlatan1.ShuffleClientDataSet(_MeuCDS);</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>Str <span>function Str(v: Variant): string;</span></h2>
+                <p>Função de cast para String.</p>
+                <pre><code class="language-delphi">Zlatan1.Str(_variant); // Return: String</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>Int <span>function Int(v: Variant): Integer;</span></h2>
+                <p>Função de cast para Integer.</p>
+                <pre><code class="language-delphi">Zlatan1.Int(_variant); // Return: Integer</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>Double <span>function Double(v: Variant): Double;</span></h2>
+                <p>Função de cast para Double.</p>
+                <pre><code class="language-delphi">Zlatan1.Double(_variant); // Return: Double</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>Date <span>function Date(v: Variant): TDateTime;</span></h2>
+                <p>Função de cast para TDateTime.</p>
+                <pre><code class="language-delphi">Zlatan1.Date(_variant); // Return: TDateTime</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>DateTime <span>function DateTime(v: Variant): TDateTime;</span></h2>
+                <p>Função de cast para TDateTime.</p>
+                <pre><code class="language-delphi">Zlatan1.DateTime(_variant); // Return: TDateTime</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>Boolean <span>function Boolean(v: Variant): Boolean;</span></h2>
+                <p>Função de cast para Boolean.</p>
+                <pre><code class="language-delphi">Zlatan1.Boolean(_variant); // Return: Boolean</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>Char <span>function Char(v: Variant): Char;</span></h2>
+                <p>Função de cast para Char.</p>
+                <pre><code class="language-delphi">Zlatan1.Char(_variant); // Return: Char</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>FilterNumbers <span>function FilterNumbers(const str: string; rmvSpace: Boolean): string; overload;</span></h2>
+                <p>Função para filtrar apenas caracteres numéricos de uma string.</p>
+                <pre><code class="language-delphi">Zlatan1.FilterNumbers('MG 12.345.678-9'); // Return: ' 123456789'
+Zlatan1.FilterNumbers('MG 12.345.678-9', True); // Return: '123456789'</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>FilterLetters <span>function FilterLetters(const str: string; rmvSpace: Boolean): string; overload;</span></h2>
+                <p>Função para filtrar apenas letras de uma string.</p>
+                <pre><code class="language-delphi">Zlatan1.FilterLetters('MG 12.345.678-9'); // Return: 'MG '
+Zlatan1.FilterLetters('MG 12.345.678-9', True); // Return: 'MG'</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>FilterAlphanumeric <span>function FilterAlphanumeric(const str: string; rmvSpace: Boolean): string; overload;</span></h2>
+                <p>Função para filtrar apenas letras e números de uma string.</p>
+                <pre><code class="language-delphi">Zlatan1.FilterAlphanumeric('MG 12.345.678-9'); // Return: 'MG 123456789'
+Zlatan1.FilterAlphanumeric('MG 12.345.678-9', True); // Return: 'MG123456789'</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>RegexIsMatch <span>function RegexIsMatch(const str, pattern: string): Boolean;</span></h2>
+                <p>Função para verificar se há uma correspondência da expressão regular.</p>
+                <pre><code class="language-delphi">Zlatan1.RegexIsMatch('Hello 123 World 456', '\d+'); // Return: True</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>RegexMatch <span>function RegexMatch(const str, pattern: string): string;</span></h2>
+                <p>Função para obter a primeira correspondência da expressão regular.
+                <pre><code class="language-delphi">Zlatan1.RegexMatch('Hello 123 World 456', '\d+'); // Return: '123'</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>RegexMatches <span>function RegexMatches(const str, pattern: string): TArray<string>;</span></h2>
+                <p>Função para obter todas as correspondências da expressão regular.</p>
+                <pre><code class="language-delphi">Zlatan1.RegexMatches('Hello 123 World 456', '\d+'); // Return: ['123', '456']</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>RegexReplace <span>function RegexReplace(const str, pattern, replace: string): string;</span></h2>
+                <p>Função para substituir todas as correspondências da expressão regular por algo.</p>
+                <pre><code class="language-delphi">Zlatan1.RegexReplace('Hello 123 World 456', '\d+', '#'); // Return: 'Hello # World #'</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>ApplyMask <span>function ApplyMask(const str, mask: string): string;</span></h2>
+                <p>Função para aplicar máscaras em strings.</p>
+                <pre><code class="language-delphi">Zlatan1.ApplyMask('12345678901', '###.###.###-##'); // Return: '123.456.789-01'
+Zlatan1.ApplyMask('12345678901', 'CPF: ###########'); // Return: 'CPF: 12345678901'
+Zlatan1.ApplyMask('12345678901', '###.###.### CPF: ##'); // Return: '123.456.789 CPF: 01'
+Zlatan1.ApplyMask('123456789', '###.###.###-??'); // Return: '123.456.789-??'
+Zlatan1.ApplyMask('1234567890123', '###.###.###-??'); // Return: '123.456.789-??'
+Zlatan1.ApplyMask('123456789', '###.###.###-##'); // Return: '123.456.789-'
+Zlatan1.ApplyMask('123456789012345', '###.###.###-##'); // Return: '123.456.789-01'</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>ValidaCPF <span></span></h2>
+                <p>Função para validar CPF.</p>
+                <pre><code class="language-delphi">Zlatan1.ValidaCPF('529.982.247-25'); // Return: True
+Zlatan1.ValidaCPF('52998224725'); // Return: True
+Zlatan1.ValidaCPF('123.456.789-01'); // Return: False
+Zlatan1.ValidaCPF('12345678901'); // Return: False</code></pre>
+            </div>
+
+            <div class="list-item">
+                <h2>ValidaCNPJ <span></span></h2>
+                <p>Função para validar CNPJ.</p>
+                <pre><code class="language-delphi">Zlatan1.ValidaCNPJ('00.000.000/0001-91'); // Return: True
+Zlatan1.ValidaCNPJ('00000000000191'); // Return: True
+Zlatan1.ValidaCNPJ('11.111.111/1111-11'); // Return: False
+Zlatan1.ValidaCNPJ('11111111111111'); // Return: False</code></pre>
             </div>
         </section>
     </main>
