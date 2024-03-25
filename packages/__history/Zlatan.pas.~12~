@@ -336,61 +336,39 @@ end;
 
 function TZlatan.ValidaCNPJ(const cnpj: string): Boolean;
 var
-    tamanho, soma, pos, i: Integer;
-    numeros, digitos, str: string;
+    Soma, Digito, DigitoVerif1, DigitoVerif2: Integer;
+    I: Integer;
+    CNPJVerificado: string;
 begin
-    str := FilterNumbers(cnpj, True);
-    if str = '' then
-        Result := False
-    else
+    CNPJVerificado := '';
+    for I := 1 to Length(CNPJ) do
     begin
-        if Length(str) <> 14 then
-          Result := False
-        else
-        begin
-            if (str = '00000000000000') or
-               (str = '11111111111111') or
-               (str = '22222222222222') or
-               (str = '33333333333333') or
-               (str = '44444444444444') or
-               (str = '55555555555555') or
-               (str = '66666666666666') or
-               (str = '77777777777777') or
-               (str = '88888888888888') or
-               (str = '99999999999999') then
-                    Result := False
-            else
-            begin
-                tamanho := Length(str) - 2;
-                numeros := Copy(str, 1, tamanho);
-                digitos := Copy(str, tamanho + 1, 2);
-                soma := 0;
-                pos := tamanho - 7;
-                for i := tamanho downto 1 do
-                begin
-                    soma := soma + StrToInt(numeros[tamanho - i + 1]) * pos;
-                    Dec(pos);
-                    if pos < 2 then
-                        pos := 9;
-                end;
-                Result := (soma mod 11 < 2) = (StrToInt(digitos[1]) = 0);
-                if not Result then
-                    Exit;
-                Inc(tamanho);
-                numeros := Copy(str, 1, tamanho);
-                soma := 0;
-                pos := tamanho - 7;
-                for i := tamanho downto 1 do
-                begin
-                    soma := soma + StrToInt(numeros[tamanho - i + 1]) * pos;
-                    Dec(pos);
-                    if pos < 2 then
-                        pos := 9;
-                end;
-                Result := (soma mod 11 < 2) = (StrToInt(digitos[2]) = 0);
-            end;
-        end;
+        if CNPJ[I] in ['0'..'9'] then
+            CNPJVerificado := CNPJVerificado + CNPJ[I];
     end;
+    if Length(CNPJVerificado) <> 14 then
+        Exit(False);
+    Soma := 0;
+    for I := 1 to 12 do
+    begin
+        Soma := Soma + StrToInt(CNPJVerificado[I]) * (6 - (I mod 6));
+    end;
+    Digito := 11 - (Soma mod 11);
+    if Digito >= 10 then
+        Digito := 0;
+    DigitoVerif1 := StrToInt(CNPJVerificado[13]);
+    if Digito <> DigitoVerif1 then
+        Exit(False);
+    Soma := 0;
+    for I := 1 to 13 do
+    begin
+        Soma := Soma + StrToInt(CNPJVerificado[I]) * (7 - (I mod 7));
+    end;
+    Digito := 11 - (Soma mod 11);
+    if Digito >= 10 then
+        Digito := 0;
+    DigitoVerif2 := StrToInt(CNPJVerificado[14]);
+    Result := (Digito = DigitoVerif2);
 end;
 
 end.
