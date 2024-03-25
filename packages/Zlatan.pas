@@ -1,0 +1,374 @@
+unit Zlatan;
+
+interface
+
+uses
+    System.SysUtils, System.Generics.Collections, System.Classes, vcl.Dialogs, DB, DBClient, Variants, RegularExpressions;
+
+type
+    TZlatan = class(TComponent)
+    private
+        { Private declarations }
+    protected
+        { Protected declarations }
+    public
+        { Public declarations }
+        function RandomInt(nStart, nEnd: Integer): Integer;
+        function RandomDouble(nStart, nEnd: Double): Double;
+
+        function RandomChoiceArray<T>(const arr: array of T): T;
+        procedure RandomChoiceClientDataSet(cds: TClientDataSet);
+
+        procedure ShuffleArray<T>(var arr: TArray<T>);
+        procedure ShuffleClientDataSet(cds: TClientDataSet);
+
+        function Str(v: Variant): string;
+        function Int(v: Variant): Integer;
+        function Double(v: Variant): Double;
+        function Date(v: Variant): TDateTime;
+        function DateTime(v: Variant): TDateTime;
+        function Boolean(v: Variant): Boolean;
+        function Char(v: Variant): Char;
+
+        function FilterNumbers(const str: string): string; overload;
+        function FilterLetters(const str: string): string; overload;
+        function FilterAlphanumeric(const str: string): string; overload;
+        function FilterNumbers(const str: string; rmvSpace: Boolean): string; overload;
+        function FilterLetters(const str: string; rmvSpace: Boolean): string; overload;
+        function FilterAlphanumeric(const str: string; rmvSpace: Boolean): string; overload;
+
+        function RegexIsMatch(const str, pattern: string): Boolean;
+        function RegexMatch(const str, pattern: string): string;
+        function RegexMatches(const str, pattern: string): TArray<string>;
+        function RegexReplace(const str, pattern, replace: string): string;
+
+        function ApplyMask(const str, mask: string): string;
+
+        function ValidaCPF(const cpf: string): Boolean;
+        function ValidaCNPJ(const cnpj: string): Boolean;
+    published
+        { Published declarations }
+    end;
+
+procedure Register;
+
+implementation
+
+procedure Register;
+begin
+    RegisterComponents('Zlatan Helper', [TZlatan]);
+end;
+
+{ TZlatan }
+
+function TZlatan.RandomInt(nStart, nEnd: Integer): Integer;
+begin
+    Randomize;
+    Result := Random((nEnd - nStart) + 1) + nStart;
+end;
+
+function TZlatan.RandomDouble(nStart, nEnd: Double): Double;
+begin
+    Randomize;
+    Result := Random * (nEnd - nStart) + nStart;
+end;
+
+function TZlatan.RandomChoiceArray<T>(const arr: array of T): T;
+begin
+    if Length(arr) = 0 then
+        raise Exception.Create('O vetor não pode ser vazio!');
+    Result := arr[RandomInt(0, High(arr))];
+end;
+
+procedure TZlatan.RandomChoiceClientDataSet(cds: TClientDataSet);
+var
+    _RecordCount: Integer;
+begin
+    _RecordCount := cds.RecordCount;
+    cds.First;
+    if _RecordCount = 0 then Exit;
+    cds.MoveBy(RandomInt(0, _RecordCount-1));
+end;
+
+procedure TZlatan.ShuffleArray<T>(var arr: TArray<T>);
+var
+    _i, _j : Integer;
+    _tmp : T;
+begin
+    for _i := High(arr) downto 1 do
+    begin
+        _j := Random(_i + 1);
+        _tmp := arr[_j];
+        arr[_j] := arr[_i];
+        arr[_i] := _tmp;
+    end;
+end;
+
+procedure TZlatan.ShuffleClientDataSet(cds: TClientDataSet);
+var
+    _rl: TList<TBookmark>;
+    _tmpl: TList<TBookmark>;
+    _bmk: TBookmark;
+    _i, _j: Integer;
+begin
+    _bmk := cds.Bookmark;
+    _rl := TList<TBookmark>.Create;
+    try
+        cds.DisableControls;
+        cds.First;
+        while not cds.Eof do
+        begin
+            _rl.Add(cds.GetBookmark);
+            cds.Next;
+        end;
+        _tmpl := TList<TBookmark>.Create;
+        try
+            for _i := _rl.Count - 1 downto 1 do
+            begin
+                _j := Random(_i + 1);
+                _tmpl.Add(_rl[_j]);
+                _rl[_j] := _rl[_i];
+                _rl[_i] := _tmpl[_tmpl.Count - 1];
+            end;
+            cds.EmptyDataSet;
+            for _i := 0 to _rl.Count - 1 do
+            begin
+                cds.GotoBookmark(_rl[_i]);
+                cds.Insert;
+                cds.Post;
+            end;
+        finally
+            _tmpl.Free;
+        end;
+    finally
+        cds.Bookmark := _bmk;
+        cds.EnableControls;
+        _rl.Free;
+    end;
+end;
+
+function TZlatan.Str(v: Variant): string;
+begin
+    Result := VarToStr(v);
+end;
+
+function TZlatan.Int(v: Variant): Integer;
+begin
+    Result := VarAsType(v, varInteger);
+end;
+
+function TZlatan.Double(v: Variant): Double;
+begin
+    Result := VarAsType(v, varDouble);
+end;
+
+function TZlatan.Date(v: Variant): TDateTime;
+begin
+    Result := VarAsType(v, varDate);
+end;
+
+function TZlatan.DateTime(v: Variant): TDateTime;
+begin
+    Result := VarAsType(v, varDate);
+end;
+
+function TZlatan.Boolean(v: Variant): Boolean;
+begin
+    Result := VarAsType(v, varBoolean);
+end;
+
+function TZlatan.Char(v: Variant): Char;
+begin
+    Result := Char(VarAsType(v, varString)[1]);
+end;
+
+function TZlatan.FilterNumbers(const str: string): string;
+begin
+    Result := FilterNumbers(str, False);
+end;
+
+function TZlatan.FilterLetters(const str: string): string;
+begin
+    Result := FilterLetters(str, False);
+end;
+
+function TZlatan.FilterAlphanumeric(const str: string): string;
+begin
+    Result := FilterAlphanumeric(str, False);
+end;
+
+function TZlatan.FilterNumbers(const str: string; rmvSpace: Boolean): string;
+var
+    _regex: TRegEx;
+begin
+    if rmvSpace then
+        _regex := TRegEx.Create('\D+')
+    else
+        _regex := TRegEx.Create('[^\d ]');
+    Result := _regex.Replace(str, '');
+end;
+
+function TZlatan.FilterLetters(const str: string; rmvSpace: Boolean): string;
+var
+    _regex: TRegEx;
+begin
+    if rmvSpace then
+        _regex := TRegEx.Create('[^A-Za-z]+')
+    else
+        _regex := TRegEx.Create('[^A-Za-z ]');
+    Result := _regex.Replace(str, '');
+end;
+
+function TZlatan.FilterAlphanumeric(const str: string; rmvSpace: Boolean): string;
+var
+    _regex: TRegEx;
+begin
+    if rmvSpace then
+        _regex := TRegEx.Create('[^\w]+')
+    else
+        _regex := TRegEx.Create('[^\w ]');
+    Result := _regex.Replace(str, '');
+end;
+
+function TZlatan.RegexIsMatch(const str, pattern: string): Boolean;
+var
+    _regex: TRegEx;
+begin
+    _regex := TRegEx.Create(pattern);
+    Result := _regex.IsMatch(str);
+end;
+
+function TZlatan.RegexMatch(const str, pattern: string): string;
+var
+    _regex: TRegEx;
+    _match: TMatch;
+begin
+    _regex := TRegEx.Create(pattern);
+    _match := _regex.Match(str);
+    if _match.Success then
+        Result := _match.Value
+    else
+        Result := '';
+end;
+
+function TZlatan.RegexMatches(const str, pattern: string): TArray<string>;
+var
+    _regex: TRegEx;
+    _matches: TMatchCollection;
+    _i: Integer;
+begin
+    _regex := TRegEx.Create(pattern);
+    _matches := _regex.Matches(str);
+    SetLength(Result, _matches.Count);
+    for _i := 0 to _matches.Count - 1 do
+        Result[_i] := _matches[_i].Value;
+end;
+
+function TZlatan.RegexReplace(const str, pattern, replace: string): string;
+var
+    _regex: TRegEx;
+begin
+    _regex := TRegEx.Create(pattern);
+    Result := _regex.Replace(str, replace);
+end;
+
+function TZlatan.ApplyMask(const str, mask: string): string;
+var
+    _i, _j: Integer;
+    _out: string;
+begin
+    _out := '';
+    _j := 1;
+    for _i := 1 to Length(mask) do
+    begin
+        if mask[_i] = '#' then
+        begin
+            if _j <= Length(str) then
+            begin
+                _out := _out + str[_j];
+                Inc(_j);
+            end
+            else
+                _out := _out + ' ';
+            end
+        else if mask[_i] = '?' then
+        begin
+            _out := _out + '?';
+        end
+        else
+            _out := _out + mask[_i];
+    end;
+    Result := _out;
+end;
+
+function TZlatan.ValidaCPF(const cpf: string): Boolean;
+var
+    Soma, Digito, DigitoVerif1, DigitoVerif2: Integer;
+    I: Integer;
+    CPFVerificado: string;
+begin
+    CPFVerificado := '';
+    for I := 1 to Length(CPF) do
+    begin
+        if CPF[I] in ['0'..'9'] then
+            CPFVerificado := CPFVerificado + CPF[I];
+    end;
+    if Length(CPFVerificado) <> 11 then
+       Exit(False);
+    Soma := 0;
+    for I := 1 to 9 do
+        Soma := Soma + StrToInt(CPFVerificado[I]) * (11 - I);
+    Digito := 11 - (Soma mod 11);
+    if Digito >= 10 then
+       Digito := 0;
+    DigitoVerif1 := StrToInt(CPFVerificado[10]);
+    if Digito <> DigitoVerif1 then
+       Exit(False);
+    Soma := 0;
+    for I := 1 to 10 do
+       Soma := Soma + StrToInt(CPFVerificado[I]) * (12 - I);
+    Digito := 11 - (Soma mod 11);
+    if Digito >= 10 then
+       Digito := 0;
+    DigitoVerif2 := StrToInt(CPFVerificado[11]);
+    Result := (Digito = DigitoVerif2);
+end;
+
+function TZlatan.ValidaCNPJ(const cnpj: string): Boolean;
+var
+    Soma, Digito, DigitoVerif1, DigitoVerif2: Integer;
+    I: Integer;
+    CNPJVerificado: string;
+begin
+    CNPJVerificado := '';
+    for I := 1 to Length(CNPJ) do
+    begin
+        if CNPJ[I] in ['0'..'9'] then
+            CNPJVerificado := CNPJVerificado + CNPJ[I];
+    end;
+    if Length(CNPJVerificado) <> 14 then
+        Exit(False);
+    Soma := 0;
+    for I := 1 to 12 do
+    begin
+        Soma := Soma + StrToInt(CNPJVerificado[I]) * (6 - (I mod 6));
+    end;
+    Digito := 11 - (Soma mod 11);
+    if Digito >= 10 then
+        Digito := 0;
+    DigitoVerif1 := StrToInt(CNPJVerificado[13]);
+    if Digito <> DigitoVerif1 then
+        Exit(False);
+    Soma := 0;
+    for I := 1 to 13 do
+    begin
+        Soma := Soma + StrToInt(CNPJVerificado[I]) * (7 - (I mod 7));
+    end;
+    Digito := 11 - (Soma mod 11);
+    if Digito >= 10 then
+        Digito := 0;
+    DigitoVerif2 := StrToInt(CNPJVerificado[14]);
+    Result := (Digito = DigitoVerif2);
+end;
+
+end.
