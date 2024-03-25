@@ -1,10 +1,10 @@
 # Arquivos compilados
 *.exe
 *.dll
-*.bpl
-*.dcu
-*.dcp
-*.res
+#*.bpl
+#*.dcu
+#*.dcp
+#*.res
 
 # Arquivos temporários
 *.~*
@@ -14,7 +14,7 @@
 # Arquivos de projeto
 *.dsk
 *.dproj
-*.groupproj
+#*.groupproj
 *.bdsgroup
 __history/
 ModelSupportFiles/
