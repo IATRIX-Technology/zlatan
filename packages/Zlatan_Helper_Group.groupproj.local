@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2024/03/24 02:07:49.000.685,C:\Users\Paulo Ricardo\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=Z:\zlatan\packages\Zlatan_Helper_Group.groupproj</Transaction>
+    <Transaction>2024/03/24 02:07:49.000.685,Z:\zlatan\packages\Zlatan_Helper_Group.groupproj=C:\Users\Paulo Ricardo\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
   </Transactions>
 	<Default.Personality>
-		<Projects ActiveProject="Z:\zlatan\packages\Zlatan_Helper.dproj"/>
+		<Projects ActiveProject="C:\componentes\zlatan\packages\Zlatan_Helper.dproj"/>
 	</Default.Personality>
 </BorlandProject>
