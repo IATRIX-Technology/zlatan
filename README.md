@@ -2,7 +2,7 @@
 O Zlatan Helper é um componente para Delphi VCL que oferece uma variedade de funções e procedimentos úteis para auxiliar no desenvolvimento de aplicações.
 
 ## Documentação
-A documentação completa está disponível em ['documentation/documentation.html'](documentation/documentation.html)
+A documentação completa está disponível em ['https://iatrix-technology.github.io/zlatan/documentation/'](https://iatrix-technology.github.io/zlatan/documentation/)
 
 ## Instalação do Zlatan Helper Component
 1. **Clone o Repositório**: Faça o clone do repositório do Zlatan Helper Component.
