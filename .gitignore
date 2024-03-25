@@ -13,17 +13,17 @@
 
 # Arquivos de projeto
 *.dsk
-*.dproj
+#*.dproj
 #*.groupproj
-*.bdsgroup
+#*.bdsgroup
 __history/
 ModelSupportFiles/
 ProjectBackup/
 __recovery/
 
 # Arquivos de configuração da IDE
-*.local
-*.identcache
+#*.local
+#*.identcache
 *.stat
 
 # Arquivos de depuração
