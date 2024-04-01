@@ -46,8 +46,6 @@ type
 
         function ValidaCPF(const cpf: string): Boolean;
         function ValidaCNPJ(const cnpj: string): Boolean;
-
-        function UpperFirst(const str: string): string;
     published
         { Published declarations }
     end;
@@ -395,9 +393,9 @@ begin
     end;
 end;
 
-function TZlatan.UpperFirst(const str: string): string;
+function CapitalizeFirstLetter(const S: string): string;
 begin
-    Result := AnsiUpperCase(Copy(str, 1, 1)) + Copy(str, 2, Length(str) - 1);
+  Result := AnsiUpperCase(Copy(S, 1, 1)) + Copy(S, 2, Length(S) - 1);
 end;
 
 end.
