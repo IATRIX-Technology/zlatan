@@ -34,7 +34,6 @@ requires
   dsnap;
 
 contains
-  Zlatan in 'Zlatan.pas',
-  ZlatanThreads in 'ZlatanThreads.pas';
+  Zlatan in 'Zlatan.pas';
 
 end.
